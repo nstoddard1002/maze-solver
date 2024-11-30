@@ -9,13 +9,14 @@ class Window():
         #self.root.columnconfigure(0,weight=1)
         #self.root.rowconfigure(0,weight=1)
 
-        self.__canvas = Canvas(self.__root, bg="white", height=height,width=width)
+        self.__root.protocol("WM_DELETE_WINDOW", self.close)
 
+        self.__canvas = Canvas(self.__root, bg="white", height=height,width=width)
+        
+        self.__canvas.pack(fill=BOTH,expand=1)
         #self.canvas.grid(column=0,row=0,sticky=(N,W,E,S))
 
         self.__running = False
-
-        self.__root.protocol("WM_DELETE_WINDOW", self.close)
 
     def redraw(self):
         self.__root.update_idletasks()
@@ -23,7 +24,6 @@ class Window():
     
     def wait_for_close(self):
         self.__running = True
-
 
         while self.is_running is True:
             self.redraw()
@@ -45,7 +45,6 @@ class Line():
         self.p2 = point_2
 
     def draw(self, canvas, fill_color="black"):
-
         canvas.create_line(self.p1.x,self.p1.y,self.p2.x,self.p2.y,fill=fill_color,width=2)
 
 class Cell():
