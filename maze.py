@@ -22,6 +22,8 @@ class Maze():
         self._cells = []
 
         self._create_cells()
+        
+        self._break_entrance_and_exit()
 
     def _create_cells(self):
  
@@ -34,10 +36,10 @@ class Maze():
         maze_width = self.num_cols * self.size_x
         maze_height = self.num_rows * self.size_y
 
-        if maze_width > (self.win._width - self.maze_x):
+        if maze_width > (self.win._width - (2*self.maze_x)):
             raise Exception("maze too wide for window")
         
-        if maze_height > (self.win._height - self.maze_y):
+        if maze_height > (self.win._height - (2*self.maze_y)):
             raise Exception("maze too tall for window")
         
         for k in range(0,self.num_cols):
@@ -59,11 +61,11 @@ class Maze():
         if self.win is None:
             return
         self.win.redraw()
-        time.sleep(0.05)
+        time.sleep(0.5)
     
     def _break_entrance_and_exit(self):
         self._cells[0][0].has_top_wall = False
         self._draw_cell(0,0)
 
-        self._cells[self.num_cols][self.num_rows].has_bottom_wall = False
-        self._draw_cell(self.num_cols,self.num_rows)
+        self._cells[self.num_cols-1][self.num_rows-1].has_bottom_wall = False
+        self._draw_cell(self.num_cols-1,self.num_rows-1)
