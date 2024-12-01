@@ -31,24 +31,24 @@ class Maze():
                 col_cells.append(Cell(self.win))
             self._cells.append(col_cells)
         
-        #maze_width = self.num_cols * self.size_x
-        #maze_height = self.num_rows * self.size_y
+        maze_width = self.num_cols * self.size_x
+        maze_height = self.num_rows * self.size_y
 
-        #if maze_width > (self.win._width - self.maze_x):
-            #raise Exception("maze too wide for window")
+        if maze_width > (self.win._width - self.maze_x):
+            raise Exception("maze too wide for window")
         
-        #if maze_height > (self.win._height - self.maze_y):
-            #raise Exception("maze too tall for window")
+        if maze_height > (self.win._height - self.maze_y):
+            raise Exception("maze too tall for window")
         
         for k in range(0,self.num_cols):
             for l in range(0,self.num_rows):
                 self._draw_cell(k,l)
     
     def _draw_cell(self,i,j):
-        cell_x1 = (self.size_x * i) + self.maze_x
-        cell_y1 = (self.size_y * j) + self.maze_y
-        cell_x2 = (self.size_x + cell_x1) + self.maze_x
-        cell_y2 = (self.size_y + cell_y1) + self.maze_y
+        cell_x1 = int(abs((self.size_x * i) + self.maze_x))
+        cell_y1 = int(abs((self.size_y * j) + self.maze_y))
+        cell_x2 = int(abs((self.size_x + cell_x1) + self.maze_x))
+        cell_y2 = int(abs((self.size_y + cell_y1) + self.maze_y))
 
         self._cells[i][j].draw(cell_x1,cell_y1,cell_x2,cell_y2)
 
@@ -57,9 +57,10 @@ class Maze():
             return
         self.win.redraw()
         time.sleep(0.05)
-        
-        
+    
+    def _break_entrance_and_exit(self):
+        self._cells[0][0].has_top_wall = False
+        self._draw_cell(0,0)
 
-        
-        
-
+        self._cells[self.num_cols][self.num_rows].has_bottom_wall = False
+        self._draw_cell(self.num_cols,self.num_rows)

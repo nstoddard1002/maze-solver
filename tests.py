@@ -8,7 +8,12 @@ class MazeTest(unittest.TestCase):
     def test_maze_create_cells(self):
         num_cols = 12
         num_rows = 10
-        m1 = Maze(0,0,num_rows,num_cols,10,10)
+
+        mock_window = MagicMock()
+        mock_window._width = 800
+        mock_window._height = 600
+
+        m1 = Maze(0,0,num_rows,num_cols,10,10,mock_window)
         self.assertEqual(len(m1._cells),num_cols)
         self.assertEqual(len(m1._cells[0]),num_rows)
 
@@ -37,13 +42,22 @@ class MazeBoundaryTest(unittest.TestCase):
         cell_width = (window_width - 2 * margin) / num_cols
         cell_height = (window_height - 2 * margin) / num_rows
 
-        maze = Maze(margin, margin, num_rows, num_cols, cell_width, cell_height)
+        mock_window = MagicMock()
+        mock_window._width = window_width
+        mock_window._height = window_height
+
+        maze = Maze(margin, margin, num_rows, num_cols, cell_width, cell_height,mock_window)
         self.assertLessEqual(maze.num_rows * cell_height + margin, window_height)
         self.assertLessEqual(maze.num_cols * cell_width + margin, window_width)
 
 class MazeAnimationTest(unittest.TestCase):
     def test_animate_method(self):
-        maze = Maze(0, 0, 10, 12, 10, 10)
+
+        mock_window = MagicMock()
+        mock_window._width = 800
+        mock_window._height = 600
+
+        maze = Maze(0, 0, 10, 12, 10, 10,mock_window)
         try:
             maze._animate()
             result = True

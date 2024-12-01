@@ -28,10 +28,10 @@ class Window():
     def wait_for_close(self):
         self.__running = True
 
-        while self.is_running is True:
+        while self.__running is True:
             self.redraw()
     
-    def draw_line(self,new_line,fill_color):
+    def draw_line(self,new_line,fill_color="black"):
         new_line.draw(self.__canvas,fill_color)
     
     def close(self):
