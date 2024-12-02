@@ -31,36 +31,36 @@ class Cell():
 
         if self.has_left_wall:
             line = Line(Point(x1,y1), Point(x1,y2))
-            print(f"Drawing cell walls at: ({x1}, {y1}) -> ({x1}, {y2}) with color: black")
+            #print(f"Drawing cell walls at: ({x1}, {y1}) -> ({x1}, {y2}) with color: black")
             self._win.draw_line(line,"black")
         if self.has_bottom_wall:
             line = Line(Point(x1,y2), Point(x2,y2))
-            print(f"Drawing cell walls at: ({x1}, {y2}) -> ({x2}, {y2}) with color: black")
+            #print(f"Drawing cell walls at: ({x1}, {y2}) -> ({x2}, {y2}) with color: black")
             self._win.draw_line(line,"black")
         if self.has_right_wall:
             line = Line(Point(x2,y2), Point(x2,y1))
-            print(f"Drawing cell walls at: ({x2}, {y2}) -> ({x2}, {y1}) with color: black")
+            #print(f"Drawing cell walls at: ({x2}, {y2}) -> ({x2}, {y1}) with color: black")
             self._win.draw_line(line,"black")
         if self.has_top_wall:
             line = Line(Point(x2,y1), Point(x1,y1))
-            print(f"Drawing cell walls at: ({x2}, {y1}) -> ({x2}, {y2}) with color: black")
+            #print(f"Drawing cell walls at: ({x2}, {y1}) -> ({x2}, {y2}) with color: black")
             self._win.draw_line(line,"black")
         
         if self.has_left_wall is False:
             line = Line(Point(x1,y1), Point(x2,y2))
-            print(f"Drawing cell walls at: ({x1}, {y1}) -> ({x1}, {y2}) with color: white")
+            #print(f"Drawing cell walls at: ({x1}, {y1}) -> ({x1}, {y2}) with color: white")
             self._win.draw_line(line,"white")
         if self.has_bottom_wall is False:
             line = Line(Point(x1,y2), Point(x2,y2))
-            print(f"Drawing cell walls at: ({x1}, {y2}) -> ({x2}, {y2}) with color: white")
+            #print(f"Drawing cell walls at: ({x1}, {y2}) -> ({x2}, {y2}) with color: white")
             self._win.draw_line(line,"white")
         if self.has_right_wall is False:
             line = Line(Point(x2,y2), Point(x2,y1))
-            print(f"Drawing cell walls at: ({x2}, {y2}) -> ({x2}, {y1}) with color: white")
+            #print(f"Drawing cell walls at: ({x2}, {y2}) -> ({x2}, {y1}) with color: white")
             self._win.draw_line(line,"white")
         if self.has_top_wall is False:
             line = Line(Point(x2,y1), Point(x1,y1))
-            print(f"Drawing cell walls at: ({x2}, {y1}) -> ({x1}, {y1}) with color: white")
+            #print(f"Drawing cell walls at: ({x2}, {y1}) -> ({x1}, {y1}) with color: white")
             self._win.draw_line(line,"white")
     
     def draw_move(self, to_cell, undo=False):
