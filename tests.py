@@ -3,6 +3,7 @@ from maze import *
 from cell import *
 from graphics import *
 from unittest.mock import MagicMock
+import random
 
 class MazeTest(unittest.TestCase):
     def test_maze_create_cells(self):
@@ -108,6 +109,27 @@ class MazeEntranceAndExitTest(unittest.TestCase):
 
         self.assertFalse(test_maze._cells[0][0].has_top_wall)
         self.assertFalse(test_maze._cells[num_cols - 1][num_rows - 1].has_bottom_wall)
+
+class MazeClearAllVisitedCells(unittest.TestCase):
+    def test_clear_all_cells_visited_flags(self):
+        mock_window = MagicMock()
+        margin = 50
+        num_cols = 16
+        num_rows = 12
+        screen_x = 800
+        screen_y = 600
+        mock_window._width = 800
+        mock_window._height = 600
+        cell_size_x = 700 // 16
+        cell_size_y = 500 // 12
+
+        test_maze = Maze(margin, margin, num_rows, num_cols, cell_size_x, cell_size_y, mock_window)
+
+        random_x = random.randint(0,num_cols-1)
+        random_y = random.randint(0,num_rows-1)
+
+        self.assertFalse(test_maze._cells[random_x][random_y].visited)
+
 
 
 

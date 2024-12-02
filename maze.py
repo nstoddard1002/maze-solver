@@ -1,5 +1,6 @@
 from cell import *
 import time
+import random
 
 class Maze():
     def __init__(
@@ -10,7 +11,8 @@ class Maze():
         num_cols,
         cell_size_x,
         cell_size_y,
-        win=None
+        win,
+        seed=None
     ):
         self.maze_x = x1
         self.maze_y  = y1
@@ -20,10 +22,18 @@ class Maze():
         self.size_y = cell_size_y
         self.win = win
         self._cells = []
+        if seed is None:
+            self.seed = random.seed()
+        else:
+            self.seed = random.seed(seed)
 
         self._create_cells()
         
         self._break_entrance_and_exit()
+
+        self._break_walls_r(self.num_cols-1,self.num_rows-1)
+
+        self._reset_cells_visited()
 
     def _create_cells(self):
  
@@ -69,3 +79,66 @@ class Maze():
 
         self._cells[self.num_cols-1][self.num_rows-1].has_bottom_wall = False
         self._draw_cell(self.num_cols-1,self.num_rows-1)
+
+    def _break_walls_r(self,i,j):
+        self._cells[i][j].visited = True
+        while True:
+            to_visit = []
+            stuck = True
+            #checks if next cell to the right exists and has been visited
+            if i+1 < len(self._cells):
+                if self._cells[i+1][j].visited == False:
+                    to_visit.append(((i+1),j))
+                    stuck = False
+            #checks if next cell down exists and has been visited
+            if j+1 < len(self._cells[i]):
+                if self._cells[i][j+1].visited == False:
+                    to_visit.append((i,(j+1)))
+                    stuck = False
+            #checks if next cell to the left exists and has been visited
+            if i-1 >= 0:
+                if self._cells[i-1][j].visited == False:
+                    to_visit.append(((i-1),j))
+                    stuck = False
+            #checks if next cell up exists and has been visited
+            if j-1 >= 0:
+                if self._cells[i][j-1].visited == False:
+                    to_visit.append((i,(j-1)))
+                    stuck = False
+            if stuck is True:
+                self._draw_cell(i,j)
+                return
+            next_direction = to_visit[random.randint(0,(len(to_visit)-1))]
+
+            next_direction_x = next_direction[0]
+            next_direction_y = next_direction[1]
+
+            if next_direction_x == i and next_direction_y > j:
+                self._cells[i][j+1].has_top_wall = False
+                self._cells[i][j].has_bottom_wall = False
+                self._draw_cell(i,j+1)
+                self._draw_cell(i,j)
+                self._break_walls_r(i,j+1)
+            elif next_direction_x == i and next_direction_y < j:
+                self._cells[i][j-1].has_bottom_wall = False
+                self._cells[i][j].has_top_wall = False
+                self._draw_cell(i,j-1)
+                self._draw_cell(i,j)
+                self._break_walls_r(i,j-1)
+            elif next_direction_x > i and next_direction_y == j:
+                self._cells[i+1][j].has_left_wall = False
+                self._cells[i][j].has_right_wall = False
+                self._draw_cell(i+1,j)
+                self._draw_cell(i,j)
+                self._break_walls_r(i+1,j)
+            elif next_direction_x < i and next_direction_y == j:
+                self._cells[i-1][j].has_right_wall = False
+                self._cells[i][j].has_left_wall = False
+                self._draw_cell(i-1,j)
+                self._draw_cell(i,j)
+                self._break_walls_r(i-1,j)
+
+    def _reset_cells_visited(self):
+        for column in self._cells:
+            for row in column:
+                row.visited = False
