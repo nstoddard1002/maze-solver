@@ -2,11 +2,11 @@ from maze import *
 from graphics import *
 
 def main():
-    num_rows = 12
-    num_cols = 16
+    num_rows = 32
+    num_cols = 40
     margin = 50
-    screen_x = 800
-    screen_y = 600
+    screen_x = 1920
+    screen_y = 1080
     cell_size_x = (screen_x - (2 * margin)) // num_cols
     cell_size_y = (screen_y - (2 * margin)) // num_rows
 
